@@ -1,0 +1,20 @@
+---
+
+- name: "Create kickstart config on {{ inventory_hostname }}"
+  ansible.builtin.include_role:
+    name: nickhardiman.libvirt.kickstart_file
+  vars:
+    kickstart_file_config: "{{ build_file_config }}"
+
+- name: "Kickstart VM on hypervisor {{ inventory_hostname }}"
+  ansible.builtin.include_role:
+    name: nickhardiman.libvirt.kickstart_install
+  vars:
+    kickstart_install_config: "{{ build_install_config }}"
+
+- name: Run machine (it stops after install)
+  ansible.builtin.include_role:
+    name: nickhardiman.libvirt.start_domain
+  vars:
+    start_domain_name: "{{ build_fqdn }}"
+    wait_for_ping: false

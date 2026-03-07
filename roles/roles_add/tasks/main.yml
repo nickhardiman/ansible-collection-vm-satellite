@@ -1,0 +1,43 @@
+---
+
+# so very many to include
+# https://github.com/nickhardiman/ansible-playbook-aap-lab/blob/main/aap-lab-playbook%F0%9F%98%8E.yml
+
+# - ansible.builtin.import_playbook: playbooks/satellite-install-installer.yml
+# - ansible.builtin.import_playbook: playbooks/satellite-install-certs.yml
+# - ansible.builtin.import_playbook: playbooks/satellite-install-run.yml
+# - ansible.builtin.import_playbook: playbooks/satellite-administer-add.yml
+# - ansible.builtin.import_playbook: playbooks/satellite-content-add.yml
+# - ansible.builtin.import_playbook: playbooks/satellite-infrastructure-add.yml
+# - ansible.builtin.import_playbook: playbooks/satellite-configure-add.yml
+
+- name: "Add roles that don't need extra vars"
+  ansible.builtin.include_role:
+    name: "{{ l_role }}"
+  loop:
+    - nickhardiman.platform.managed_node
+    - nickhardiman.platform.hosts_file
+    - nickhardiman.platform.register_rhc
+    # !!! add role to handle new RHEL10 bug https://access.redhat.com/solutions/7136991
+    - nickhardiman.platform.latest_packages
+    - nickhardiman.platform.smtp_client
+    - nickhardiman.platform.squid_proxy
+    - nickhardiman.platform.dns_forwarder
+    - nickhardiman.platform.cockpit_server
+    - nickhardiman.platform.register_insights
+    # !!! add time_server?
+    # https://hardiman.consulting/rhel/9/time/chrony.html
+  loop_control:
+    loop_var: l_role
+
+- name: "Add server certificate for {{ roles_add_fqdn }}"
+  ansible.builtin.include_role:
+    name: nickhardiman.platform.server_cert
+  vars:
+    server_cert_config: "{{ roles_add_server_cert_config }}"
+
+- name: "Configure HAproxy on {{ roles_add_fqdn }}"
+  ansible.builtin.include_role:
+    name: nickhardiman.platform.haproxy
+  vars:
+    haproxy_config_file_template: haproxy-sni-tcp-aap-refarch.cfg.j2

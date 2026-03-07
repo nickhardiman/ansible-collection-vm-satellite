@@ -1,0 +1,101 @@
+---
+# defaults for role
+
+# last octet is used as a suffix on addresses
+#  eg. MAC: 52:54:00:03:00:05, IPv4: 192.168.134.5
+# host and lab network
+build_hostname: satellite
+build_last_octet: 5
+#
+build_fqdn: "{{ build_hostname }}.{{ build_lab_domain }}"
+build_lab_net_short_name: lab
+build_lab_net_prefix: "192.168.134"
+build_lab_mac_prefix: "52:54:00:03"
+#
+build_lab_libvirt_name:   "net{{ build_lab_net_short_name }}"
+build_lab_nmcli_name: "bridge-{{ build_lab_net_short_name }}"
+build_lab_bridge_name:     "br{{ build_lab_net_short_name }}"
+build_lab_bridge_mac:        "{{ build_lab_mac_prefix }}:00:01"
+build_lab_bridge_ip_cidr:    "{{ build_lab_net_prefix }}.1/24"
+build_lab_domain: silvan.uk
+
+# kickstart
+# playbook copies kvm-guest.ks to either a working directory or {{ work_dir }}/
+build_kickstart_file_template: "kvm-guest-nic-static.ks.j2"
+# !!! fix work_dir first
+build_kickstart_file_path: "{{ work_dir | default('{{ work_dir }}') }}"
+# build_kickstart_file_path:  {{ work_dir }}
+build_kickstart_file_name: "{{ build_fqdn }}.ks"
+
+# This is passed to the role
+#   nickhardiman.libvirt.kickstart_file
+# --------
+build_file_config:
+  kickstart_file_template: "{{ build_kickstart_file_template }}"
+  kickstart_file_path: "{{ build_kickstart_file_path }}"
+  kickstart_file_name: "{{ build_kickstart_file_name }}"
+  # network
+  lab_net_prefix: "{{ build_lab_net_prefix }}"
+  nics:
+    -
+      name: enp1s0
+      mac: "{{ build_lab_mac_prefix }}:00:0{{ build_last_octet }}"
+      net: "{{ build_lab_libvirt_name }}"
+      # IP is static
+      ip: "{{ build_lab_net_prefix }}.{{ build_last_octet }}"
+  net_services:
+    - cockpit
+    - http
+    - https
+    - ssh
+    - RH-Satellite-6
+  fqdn: "{{ build_fqdn }}"
+  # apps
+  rpms:
+    - cockpit
+  # accounts
+  # names and passwords are from vault
+  user_root_password_encrypted:    "{{ lookup('ansible.builtin.pipe', '/usr/bin/openssl passwd  -6 --salt=G3GIlnUH.JqcrAQl ' + user_root_password  | quote ) }}"
+  user_admin_name: "{{ user_admin_name }}"
+  user_admin_password_encrypted:   "{{ lookup('ansible.builtin.pipe', '/usr/bin/openssl passwd  -6 --salt=G3GIlnUH.JqcrAQl ' + user_admin_password  | quote ) }}"
+  # looks like "ssh-ed25519 1234567890ABCDEFT1234567890ABCDEF1234567890ABCDEF1234567890ABCDEF012 vboxuser@rhelvm"
+  user_admin_public_key: "{{ user_admin_public_key }}"
+  user_ansible_name: "{{ user_ansible_name }}"
+  user_ansible_password_encrypted: "{{ lookup('ansible.builtin.pipe', '/usr/bin/openssl passwd  -6 --salt=G3GIlnUH.JqcrAQl ' + user_ansible_password  | quote ) }}"
+  user_ansible_public_key: "{{ user_ansible_public_key }}"
+  # storage
+  # default 30GB disk
+  # size in GiB
+  disk_size: 30
+  # Add up the sizes below and make sure they fit in the disk_size.
+  # partitions
+  # 1 for /boot/efi                600M
+  # 2 for /boot                    1024M
+  # 3 LVM Physical Volume          28G * 1024 = 28672M
+  pv_size: 28672
+  # LVM logical volume for /root   13G * 1024 = 13312M
+  lv_root: 13312
+  # LVM logical volume for /var    13G * 1024 = 13312M
+  lv_var: 13312
+# --------
+
+# --------
+build_install_config:
+  fqdn: "{{ build_fqdn }}"
+  cpus: 4
+  ram: 16384                          # size in MiB (16G * 1024 = 16384M)
+  disk_size: 30                       # size in GiB
+  nics:
+    -
+      name: enp1s0
+      mac: "{{ build_lab_mac_prefix }}:00:0{{ build_last_octet }}"
+      net: "{{ build_lab_libvirt_name }}"
+      # IP is static
+      ip: "{{ build_lab_net_prefix }}.{{ build_last_octet }}"
+  install_iso: /var/lib/libvirt/images/rhel-10.1-x86_64-dvd.iso
+  # Use this command to get the list of accepted OS variants.
+  #  virt-install --osinfo list
+  os_variant: rhel10.1
+  kickstart_file_path: "{{ build_kickstart_file_path }}"
+  kickstart_file_name: "{{ build_kickstart_file_name }}"
+# --------

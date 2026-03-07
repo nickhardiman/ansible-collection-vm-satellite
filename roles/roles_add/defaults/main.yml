@@ -1,0 +1,11 @@
+---
+# defaults for role
+roles_add_lab_domain: silvan.uk
+roles_add_hostname: satellite
+roles_add_fqdn: "{{ roles_add_hostname }}.{{ roles_add_lab_domain }}"
+
+roles_add_server_cert_config:
+  ca_fqdn: "{{ ca_fqdn }}"
+  fqdn: "{{ roles_add_fqdn }}"
+  cn: "{{ roles_add_fqdn }}"
+  subject_alt_name: "IP:{{ site_ip }}"

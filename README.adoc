@@ -1,0 +1,42 @@
+= Ansible Collection - nickhardiman.vm_satellite
+
+Yet another refactor of my home lab automation
+
+== third attempt, RHEL lab 
+
+WIP
+
+network of virtual machines on one fresh RHEL 10 host.
+
+take the AAP2 work and break up into less choking chunks
+
+* https://github.com/nickhardiman/script-rhel-setup
+* https://github.com/nickhardiman/ansible-playbook-rhel-lab
+* https://github.com/nickhardiman/ansible-collection-platform
+* https://github.com/nickhardiman/ansible-collection-libvirt
+* https://github.com/nickhardiman/ansible-collection-vm-gateway
+* https://github.com/nickhardiman/ansible-collection-vm-satellite
+
+
+== second attempt, AAP2 refarch
+
+couple years ago
+
+network of virtual machines on three fresh RHEL 9 hosts.
+
+worked, but an absolute monster 
+
+* https://github.com/nickhardiman/ansible-playbook-aap-lab
+* https://github.com/nickhardiman/ansible-collection-platform
+
+== first attempt, RHEL lab
+
+few years ago 
+
+network of virtual machines on three fresh RHEL 9 hosts.
+
+* https://github.com/nickhardiman/ansible-playbook-source
+* https://github.com/nickhardiman/ansible-playbook-build
+* https://github.com/nickhardiman/ansible-playbook-supply
+* https://github.com/nickhardiman/ansible-collection-platform
+* https://github.com/nickhardiman/ansible-collection-app
