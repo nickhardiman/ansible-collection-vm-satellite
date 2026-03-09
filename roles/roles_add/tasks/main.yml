@@ -11,17 +11,31 @@
 # - ansible.builtin.import_playbook: playbooks/satellite-infrastructure-add.yml
 # - ansible.builtin.import_playbook: playbooks/satellite-configure-add.yml
 
+- name: "Add server certificate for {{ roles_add_fqdn }}"
+  ansible.builtin.include_role:
+    name: nickhardiman.platform.register_rhc
+  vars:
+    register_rhc_conf:
+      rhsm_user: "{{ rhsm_user }}"
+      rhsm_password: "{{ rhsm_password }}"
+      behind_a_proxy: true
+      server_proxy_hostname: gateway.silvan.uk
+      server_proxy_port: "3128"
+
+# !!! Post-Quantum Cryptography (PQC) public key install breaks redhat.rhel_system_roles.rhc
+- name: Handle new RHEL10 bug https://access.redhat.com/solutions/7136991
+  ansible.builtin.dnf:
+    name: redhat-release
+    state: latest
+
+
 - name: "Add roles that don't need extra vars"
   ansible.builtin.include_role:
     name: "{{ l_role }}"
   loop:
     - nickhardiman.platform.managed_node
-    - nickhardiman.platform.hosts_file
-    - nickhardiman.platform.register_rhc
-    # !!! add role to handle new RHEL10 bug https://access.redhat.com/solutions/7136991
     - nickhardiman.platform.latest_packages
     - nickhardiman.platform.smtp_client
-    - nickhardiman.platform.dns_forwarder
     - nickhardiman.platform.cockpit_server
     - nickhardiman.platform.register_insights
     # !!! add time_server?

@@ -1,5 +1,13 @@
 = Ansible Collection - nickhardiman.vm_satellite
 
+== ip route 
+
+The workstation does not know about the private LAN.
+Add a route to allow a playbook running on the control node to SSH to the new managed node. 
+See 
+https://github.com/nickhardiman/script-rhel-setup/blob/main/libvirt-utils/macos-route-add.sh
+for one way of doing this. 
+
 Yet another refactor of my home lab automation
 
 == third attempt, RHEL lab 
