@@ -18,3 +18,12 @@
   vars:
     start_domain_name: "{{ build_fqdn }}"
     wait_for_ping: false
+
+- name: Add name and address to /etc/hosts on control
+  ansible.builtin.include_role:
+    name: nickhardiman.platform.hosts_record
+  vars:
+    hosts_record_conf:
+      ip_address: "{{ build_lab_net_prefix }}.{{ build_last_octet }}"
+      fqdn: "{{ build_fqdn }}"
+      host: "{{ build_hostname }}"

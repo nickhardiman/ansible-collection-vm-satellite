@@ -21,7 +21,6 @@
     # !!! add role to handle new RHEL10 bug https://access.redhat.com/solutions/7136991
     - nickhardiman.platform.latest_packages
     - nickhardiman.platform.smtp_client
-    - nickhardiman.platform.squid_proxy
     - nickhardiman.platform.dns_forwarder
     - nickhardiman.platform.cockpit_server
     - nickhardiman.platform.register_insights
@@ -35,9 +34,3 @@
     name: nickhardiman.platform.server_cert
   vars:
     server_cert_config: "{{ roles_add_server_cert_config }}"
-
-- name: "Configure HAproxy on {{ roles_add_fqdn }}"
-  ansible.builtin.include_role:
-    name: nickhardiman.platform.haproxy
-  vars:
-    haproxy_config_file_template: haproxy-sni-tcp-aap-refarch.cfg.j2
