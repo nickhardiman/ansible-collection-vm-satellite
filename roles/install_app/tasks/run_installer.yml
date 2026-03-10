@@ -1,0 +1,22 @@
+---
+
+- name: "Watch the log on {{ installer_hostname }}"
+  ansible.builtin.debug:
+    verbosity: 1
+    msg: Installer messages are logged to /var/log/foreman-installer/satellite.log
+
+- name: Disable cockpit. It uses port 9090 which clashes with foreman-proxy.service
+  ansible.builtin.systemd_service:
+    name: cockpit.socket
+    state: stopped
+    enabled: false
+
+# https://console.redhat.com/ansible/automation-hub/repo/published/redhat/satellite_operations/docs/
+- name: Let the role do the heavy lifting
+  ansible.builtin.include_role:
+    name: redhat.satellite_operations.installer
+  vars:
+    satellite_installer_scenario: "{{ install_app_satellite_installer_scenario }}"
+    satellite_installer_package: "{{ install_app_satellite_installer_package }}"
+    satellite_installer_verbose: "{{ install_app_satellite_installer_verbose }}"
+    satellite_installer_options: "{{ install_app_satellite_installer_options }}"

@@ -11,6 +11,15 @@
 # - ansible.builtin.import_playbook: playbooks/satellite-infrastructure-add.yml
 # - ansible.builtin.import_playbook: playbooks/satellite-configure-add.yml
 
+- name: "No DNS yet so update /etc/hosts for gateway"
+  ansible.builtin.include_role:
+    name: nickhardiman.platform.hosts_record
+  vars:
+    hosts_record_conf:
+      ip_address: "{{ lab_net_prefix }}.3"
+      fqdn: "{{ server_proxy_fqdn }}"
+      host: "{{ server_proxy_hostname }}"
+
 - name: "Add server certificate for {{ roles_add_fqdn }}"
   ansible.builtin.include_role:
     name: nickhardiman.platform.register_rhc
@@ -19,8 +28,8 @@
       rhsm_user: "{{ rhsm_user }}"
       rhsm_password: "{{ rhsm_password }}"
       behind_a_proxy: true
-      server_proxy_hostname: gateway.silvan.uk
-      server_proxy_port: "3128"
+      server_proxy_hostname: "{{ server_proxy_fqdn }}"
+      server_proxy_port: "{{ server_proxy_port }}"
 
 # !!! Post-Quantum Cryptography (PQC) public key install breaks redhat.rhel_system_roles.rhc
 - name: Handle new RHEL10 bug https://access.redhat.com/solutions/7136991

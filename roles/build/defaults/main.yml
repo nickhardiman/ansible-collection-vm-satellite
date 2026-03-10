@@ -66,17 +66,17 @@ build_file_config:
   # storage
   # default 30GB disk
   # size in GiB
-  disk_size: 30
+  disk_size: 80
   # Add up the sizes below and make sure they fit in the disk_size.
   # partitions
   # 1 for /boot/efi                600M
   # 2 for /boot                    1024M
-  # 3 LVM Physical Volume          28G * 1024 = 28672M
-  pv_size: 28672
+  # 3 LVM Physical Volume          78G * 1024 = 79872M
+  pv_size: 79872
   # LVM logical volume for /root   13G * 1024 = 13312M
   lv_root: 13312
-  # LVM logical volume for /var    13G * 1024 = 13312M
-  lv_var: 13312
+  # LVM logical volume for /var    64G * 1024 = 65536M
+  lv_var: 65536
 # --------
 
 # --------
@@ -84,7 +84,7 @@ build_install_config:
   fqdn: "{{ build_fqdn }}"
   cpus: 4
   ram: 16384                          # size in MiB (16G * 1024 = 16384M)
-  disk_size: 30                       # size in GiB
+  disk_size: 80                       # size in GiB
   nics:
     -
       name: enp1s0
@@ -92,10 +92,10 @@ build_install_config:
       net: "{{ build_lab_libvirt_name }}"
       # IP is static
       ip: "{{ build_lab_net_prefix }}.{{ build_last_octet }}"
-  install_iso: /var/lib/libvirt/images/rhel-10.1-x86_64-dvd.iso
+  install_iso: /var/lib/libvirt/images/rhel-9.7-x86_64-dvd.iso
   # Use this command to get the list of accepted OS variants.
   #  virt-install --osinfo list
-  os_variant: rhel10.1
+  os_variant: rhel9.7
   kickstart_file_path: "{{ build_kickstart_file_path }}"
   kickstart_file_name: "{{ build_kickstart_file_name }}"
 # --------

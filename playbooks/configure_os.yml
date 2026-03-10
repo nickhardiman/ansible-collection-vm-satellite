@@ -3,4 +3,4 @@
   become: true
   gather_facts: false
   roles:
-  - name: nickhardiman.vm_satellite.roles_add
+  - name: nickhardiman.vm_satellite.configure_os
