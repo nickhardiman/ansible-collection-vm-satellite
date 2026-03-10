@@ -15,17 +15,30 @@
 # Problem with this approach - 
 # upgrades change order.
 # menu items get rearranged with each minor release
+#
 
 # https://github.com/sscheib/ansible_satellite/blob/main/host_vars/satellite.office.int.scheib.me/02_general.yml
 satellite_location: Default Location
 satellite_organization: Default Organization
 
+# Manifest
+# See manifests using the Red Hat console
+# https://console.redhat.com/subscriptions/manifests
+# or oldskool 
+# https://access.redhat.com/management/subscription_allocations
+# See manifests using local Satellite (a progress bar pops up during import)
 # https://satellite/ > Content > Subscriptions > Manage Manifest
-# 4
+# Role
 # https://console.redhat.com/ansible/automation-hub/repo/published/redhat/satellite/content/role/manifest/
-# satellite_manifest_uuid from vault
-satellite_manifest_path: "~/manifest.zip"
-satellite_manifest_download: true
+# reads satellite_manifest_uuid from vault
+
+# !!! can't download tue 10 mar 2026
+# Place the file in satellite.silvan.uk:/root/ 
+satellite_manifest_path: "~/manifest_sat-6.18-emp-sku.zip"
+satellite_manifest_download: false
+
+# satellite_manifest_path: "~/manifest.zip"
+# satellite_manifest_download: true
 satellite_rhsm_username: "{{ rhsm_user }}"
 satellite_rhsm_password: "{{ rhsm_password }}"
 

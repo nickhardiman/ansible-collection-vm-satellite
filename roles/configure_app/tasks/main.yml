@@ -29,22 +29,18 @@
       - "{{ satellite_location }}"
     state: present
 
-# https://console.redhat.com/ansible/automation-hub/collections/published/redhat/satellite/documentation/role/settings
-- name: Point Satellite at the proxy
-  ansible.builtin.include_role:
-    name: redhat.satellite.settings
-
-# https://console.redhat.com/ansible/automation-hub/collections/published/redhat/satellite/documentation/role/ROLE
-# ROLE is manifest, repositories, lifecycle_environments, etc. 
+# https://console.redhat.com/ansible/automation-hub/collections/published/redhat/satellite/documentation/role/$ROLE
+# $ROLE is settings, manifest, repositories, lifecycle_environments, etc. 
 - name: "Add roles that don't need extra vars"
   ansible.builtin.include_role:
     name: "{{ l_role }}"
   loop:
+    - redhat.satellite.settings                # see variable satellite_settings
     - redhat.satellite.manifest                # see variables satellite_manifest_*
     - redhat.satellite.repositories            # see variable satellite_products
     - redhat.satellite.lifecycle_environments  # see variable satellite_lifecycle_environments
-    - redhat.satellite.content_views
-    - redhat.satellite.content_view_publish
-    - redhat.satellite.activation_keys
+    - redhat.satellite.content_views           # see variables satellite_organization and satellite_content_views
+    - redhat.satellite.content_view_publish    # also uses satellite_content_views
+    - redhat.satellite.activation_keys         # see variable satellite_activation_keys
   loop_control:
     loop_var: l_role

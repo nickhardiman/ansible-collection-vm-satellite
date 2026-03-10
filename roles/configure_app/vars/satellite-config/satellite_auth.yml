@@ -13,4 +13,5 @@ satellite_username: "{{ sat_admin_user }}"
 satellite_password: "{{ sat_admin_pass }}"
 
 # RHSM account 
-# satellite_rhsm_username and password are used by the redhat.satellite.manifest role. 
+# The redhat.satellite.manifest role uses
+# satellite_rhsm_username and satellite_rhsm_password
