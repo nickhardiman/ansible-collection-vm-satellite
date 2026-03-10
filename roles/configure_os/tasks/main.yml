@@ -9,6 +9,15 @@
       fqdn: "{{ server_proxy_fqdn }}"
       host: "{{ server_proxy_hostname }}"
 
+- name: "No DNS yet so update /etc/hosts for satellite installer"
+  ansible.builtin.include_role:
+    name: nickhardiman.platform.hosts_record
+  vars:
+    hosts_record_conf:
+      ip_address: "{{ lab_net_prefix }}.5"
+      fqdn: "{{ fqdn }}"
+      host: "{{ hostname }}"
+
 - name: "Add server certificate for {{ configure_os_fqdn }}"
   ansible.builtin.include_role:
     name: nickhardiman.platform.register_rhc
