@@ -42,5 +42,8 @@
     - redhat.satellite.content_views           # see variables satellite_organization and satellite_content_views
     - redhat.satellite.content_view_publish    # also uses satellite_content_views
     - redhat.satellite.activation_keys         # see variable satellite_activation_keys
+    - redhat.satellite.domains
+    - redhat.satellite.subnets
+    - redhat.satellite.hostgroups
   loop_control:
     loop_var: l_role

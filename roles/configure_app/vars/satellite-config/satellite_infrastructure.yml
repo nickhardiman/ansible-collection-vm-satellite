@@ -19,7 +19,7 @@ satellite_domains:
 # https://console.redhat.com/ansible/automation-hub/repo/published/redhat/satellite/content/role/subnets/
 # 11
 satellite_subnets:
-  - name: 'sn-site3-subnet'
+  - name: 'sn-lab-subnet'
     network: "{{ lab_net_prefix }}.0"
     mask: '255.255.255.0'
     gateway: "{{ lab_net_prefix }}.1"

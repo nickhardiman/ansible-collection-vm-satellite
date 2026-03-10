@@ -14,7 +14,7 @@ satellite_hostgroups:
     openscap_proxy: '{{ inventory_hostname }}'
     # console > Configure > Host Groups > Create Host Group > Network
     domain: 'site3.example.com'
-    subnet: 'sn-site3-subnet'
+    subnet: 'sn-lab-subnet'
     # console > Configure > Host Groups > Create Host Group > Operating System
     architecture: "x86_64"
     operatingsystem: "RedHat 8.8"
@@ -39,7 +39,7 @@ satellite_hostgroups:
     openscap_proxy: '{{ inventory_hostname }}'
     # console > Configure > Host Groups > Create Host Group > Network
     domain: 'site3.example.com'
-    subnet: 'sn-site3-subnet'
+    subnet: 'sn-lab-subnet'
     # console > Configure > Host Groups > Create Host Group > Operating System
     architecture: "x86_64"
     operatingsystem: "RedHat 9.4"
