@@ -1,0 +1,13 @@
+---
+# defaults for role
+configure_os_lab_domain: silvan.uk
+configure_os_hostname: satellite
+configure_os_fqdn: "{{ configure_os_hostname }}.{{ configure_os_lab_domain }}"
+
+configure_os_server_cert_config:
+  ca_fqdn: "{{ ca_fqdn }}"
+  fqdn: "{{ configure_os_fqdn }}"
+  cn: "{{ configure_os_fqdn }}"
+  subject_alt_name: 
+    - "IP:{{ site_ip }}"
+    - "DNS:{{ configure_os_fqdn }}"  # Satellite wants this

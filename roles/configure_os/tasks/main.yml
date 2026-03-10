@@ -1,16 +1,5 @@
 ---
 
-# so very many to include
-# https://github.com/nickhardiman/ansible-playbook-aap-lab/blob/main/aap-lab-playbook%F0%9F%98%8E.yml
-
-# - ansible.builtin.import_playbook: playbooks/satellite-install-installer.yml
-# - ansible.builtin.import_playbook: playbooks/satellite-install-certs.yml
-# - ansible.builtin.import_playbook: playbooks/satellite-install-run.yml
-# - ansible.builtin.import_playbook: playbooks/satellite-administer-add.yml
-# - ansible.builtin.import_playbook: playbooks/satellite-content-add.yml
-# - ansible.builtin.import_playbook: playbooks/satellite-infrastructure-add.yml
-# - ansible.builtin.import_playbook: playbooks/satellite-configure-add.yml
-
 - name: "No DNS yet so update /etc/hosts for gateway"
   ansible.builtin.include_role:
     name: nickhardiman.platform.hosts_record
@@ -20,7 +9,7 @@
       fqdn: "{{ server_proxy_fqdn }}"
       host: "{{ server_proxy_hostname }}"
 
-- name: "Add server certificate for {{ roles_add_fqdn }}"
+- name: "Add server certificate for {{ configure_os_fqdn }}"
   ansible.builtin.include_role:
     name: nickhardiman.platform.register_rhc
   vars:
@@ -31,11 +20,11 @@
       server_proxy_hostname: "{{ server_proxy_fqdn }}"
       server_proxy_port: "{{ server_proxy_port }}"
 
-# !!! Post-Quantum Cryptography (PQC) public key install breaks redhat.rhel_system_roles.rhc
-- name: Handle new RHEL10 bug https://access.redhat.com/solutions/7136991
-  ansible.builtin.dnf:
-    name: redhat-release
-    state: latest
+# # !!! Post-Quantum Cryptography (PQC) public key install breaks redhat.rhel_system_roles.rhc
+# - name: Handle new RHEL10 bug https://access.redhat.com/solutions/7136991
+#   ansible.builtin.dnf:
+#     name: redhat-release
+#     state: latest
 
 
 - name: "Add roles that don't need extra vars"
@@ -52,8 +41,8 @@
   loop_control:
     loop_var: l_role
 
-- name: "Add server certificate for {{ roles_add_fqdn }}"
+- name: "Add server certificate for {{ configure_os_fqdn }}"
   ansible.builtin.include_role:
     name: nickhardiman.platform.server_cert
   vars:
-    server_cert_config: "{{ roles_add_server_cert_config }}"
+    server_cert_config: "{{ configure_os_server_cert_config }}"

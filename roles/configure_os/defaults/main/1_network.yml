@@ -24,9 +24,7 @@ lab_domain_forward:    "{{ lab_domain }}"
 lab_domain_reverse:    "134.168.192.in-addr.arpa"
 
 # proxy
-# useful for
-# RHSM registration. see https://github.com/nickhardiman/ansible-collection-aap2-refarch/blob/main/roles/register_rhsm/tasks/main.yml
-# package downloads
+# useful for RHSM registration, package downloads
 server_proxy_hostname: "gateway"
 server_proxy_fqdn: "{{ server_proxy_hostname }}.{{ lab_domain }}"
 server_proxy_port: 3128

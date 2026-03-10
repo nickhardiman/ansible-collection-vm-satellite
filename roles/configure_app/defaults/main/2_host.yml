@@ -1,0 +1,7 @@
+# last octet is used as a suffix on addresses
+#  eg. MAC: 52:54:00:03:00:05, IPv4: 192.168.134.5
+# host and lab network
+hostname: satellite
+fqdn: "{{ hostname }}.{{ lab_domain }}"
+last_octet: 5
+#
