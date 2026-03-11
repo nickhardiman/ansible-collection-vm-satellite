@@ -1,12 +1,17 @@
 # yet another defaults file
 #
-# public network
+# home network
+home_network: "192.168.1.0/24"
+home_domain: home
+
+# lab public network
 public_net_short_name: public
 public_libvirt_name: "net{{ public_net_short_name }}"
 public_nmcli_name: "bridge-{{ public_net_short_name }}"
 public_bridge_name: "br{{ public_net_short_name }}"
 public_mac_prefix: "52:54:00:00"
 
+# lab private network
 lab_net_short_name:    lab
 lab_net_prefix:        "192.168.134"
 lab_mac_prefix:        "52:54:00:03"
