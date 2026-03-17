@@ -1,0 +1,29 @@
+---
+# so very many to include
+# https://github.com/nickhardiman/ansible-playbook-aap-lab/blob/main/aap-lab-playbook%F0%9F%98%8E.yml
+
+# - ansible.builtin.import_playbook: playbooks/satellite-content-add.yml
+# - ansible.builtin.import_playbook: playbooks/satellite-infrastructure-add.yml
+# - ansible.builtin.import_playbook: playbooks/satellite-configure-add.yml
+
+# https://satellite/ > Administer > Settings > Content > Default HTTP Proxy
+# https://console.redhat.com/ansible/automation-hub/collections/published/redhat/satellite/documentation/role/settings
+
+# Vile workaround for crap var scope and passing
+- name: Include vars from satellite config directory
+  ansible.builtin.include_vars:
+    dir: satellite-config
+    ignore_files: []
+    extensions: ["yml"]
+
+# https://console.redhat.com/ansible/automation-hub/collections/published/redhat/satellite/documentation/role/$ROLE
+# $ROLE is settings, manifest, repositories, lifecycle_environments, etc. 
+- name: "Add roles that don't need extra vars"
+  ansible.builtin.include_role:
+    name: "{{ l_role }}"
+  loop:
+    - redhat.satellite.domains
+    - redhat.satellite.subnets
+    - redhat.satellite.hostgroups
+  loop_control:
+    loop_var: l_role

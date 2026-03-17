@@ -1,14 +1,12 @@
 ---
-# a simpler version of the far superior 
-# https://github.com/sscheib/ansible_satellite
-# https://blog.scheib.me/2023/07/09/automating-satellite.html
-
 # Requires subscription entitlements in the manifest
 # https://github.com/sscheib/ansible_satellite/blob/main/host_vars/satellite.office.int.scheib.me/06a_products.yml
 # https://satellite/ > Content > Red Hat Repositories > Enabled Repositories
 # Products is populated from the repo list.
 # https://satellite/ > Content > Products
-# 6
+
+# Only Kickstart content is downloaded.
+
 # https://console.redhat.com/ansible/automation-hub/repo/published/redhat/satellite/content/role/repositories/
 # copy paste from 
 # https://github.com/sscheib/ansible_satellite/blob/main/host_vars/satellite.office.int.scheib.me/06a_products.yml
@@ -16,7 +14,7 @@
 sat_products:
   - name: 'Red Hat Enterprise Linux for x86_64'
     repository_sets:
-  # RHEL 10
+# RHEL 10
       - name: 'Red Hat Enterprise Linux 10 for x86_64 - BaseOS (RPMs)'
         releasever: 10
         download_policy: 'on_demand'
@@ -31,7 +29,7 @@ sat_products:
         download_policy: 'immediate'
       - name: 'Red Hat Satellite Client 6 for RHEL 10 x86_64 (RPMs)'
         download_policy: 'on_demand'
-    # RHEL 9
+# RHEL 9
       - name: 'Red Hat Enterprise Linux 9 for x86_64 - BaseOS (RPMs)'
         releasever: 9
         download_policy: 'on_demand'
@@ -46,7 +44,7 @@ sat_products:
         download_policy: 'immediate'
       - name: 'Red Hat Satellite Client 6 for RHEL 9 x86_64 (RPMs)'
         download_policy: 'on_demand'
-  # RHEL 8
+# RHEL 8
       - name: 'Red Hat Enterprise Linux 8 for x86_64 - BaseOS (RPMs)'
         releasever: "8"
         download_policy: 'on_demand'
@@ -62,16 +60,9 @@ sat_products:
       - name: 'Red Hat Satellite Client 6 for RHEL 8 x86_64 (RPMs)'
         download_policy: 'on_demand'
 
-  - name: 'Red Hat Ansible Automation Platform'
-    repository_sets:
-      - name: 'Red Hat Ansible Automation Platform 2.4 for RHEL 8 x86_64 (RPMs)'
-        download_policy: 'on_demand'
-      - name: 'Red Hat Ansible Automation Platform 2.4 for RHEL 9 x86_64 (RPMs)'
-        download_policy: 'on_demand'
-
-  # copy paste from 
-  # https://console.redhat.com/ansible/automation-hub/repo/published/redhat/satellite/content/role/repositories/
-  # RHEL 7
+# RHEL 7
+      # This section is a copy paste from an example in the docs 
+      # https://console.redhat.com/ansible/automation-hub/collections/published/redhat/satellite/documentation/role/repositories?version=5.9.0
   - name: Red Hat Enterprise Linux Server
     repository_sets:
       - name: Red Hat Enterprise Linux 7 Server (RPMs)
@@ -85,11 +76,12 @@ sat_products:
       - name: Red Hat Enterprise Linux 7 Server (Kickstart)
         basearch: x86_64
         releasever: 7.9
+        download_policy: 'immediate'
 #
-  # RHEL 6
-  # Extras and Optional required for upgrade to 7
-  # https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/7/html-single/upgrading_from_rhel_6_to_rhel_7/index#preparing-a-rhel-6-system-for-the-upgrade_upgrading-from-rhel-6-to-rhel-7
-  #
+# RHEL 6
+      # Extras and Optional required for upgrade to 7
+      # https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/7/html-single/upgrading_from_rhel_6_to_rhel_7/index#preparing-a-rhel-6-system-for-the-upgrade_upgrading-from-rhel-6-to-rhel-7
+      #
       - name: Red Hat Enterprise Linux 6 Server (RPMs)
         basearch: x86_64
         releasever: 6Server
@@ -102,9 +94,19 @@ sat_products:
       - name: Red Hat Enterprise Linux 6 Server (Kickstart)
         basearch: x86_64
         releasever: "6.10"
+        download_policy: 'immediate'
       # - name: Red Hat Software Collections RPMs for Red Hat Enterprise Linux 6 Server x86_64 6Server
       #   basearch: x86_64
       #   releasever: 6Server
+
+
+  - name: 'Red Hat Ansible Automation Platform'
+    repository_sets:
+      - name: 'Red Hat Ansible Automation Platform 2.4 for RHEL 8 x86_64 (RPMs)'
+        download_policy: 'on_demand'
+      - name: 'Red Hat Ansible Automation Platform 2.4 for RHEL 9 x86_64 (RPMs)'
+        download_policy: 'on_demand'
+
 
 
 
