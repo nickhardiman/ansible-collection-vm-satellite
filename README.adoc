@@ -1,6 +1,31 @@
 = Ansible Collection - nickhardiman.vm_satellite
 
-== ip route 
+== Use roles
+
+The example playbooks run these roles.
+
+* nickhardiman.vm_satellite.build
+* nickhardiman.vm_satellite.configure_os
+* nickhardiman.vm_satellite.install_app
+* nickhardiman.vm_satellite.configure_app
+
+== Use playbooks
+
+Create a Red Hat Satellite VM.
+
+----
+ansible-playbook --vault-pass-file=~/my-vault-pass --extra-vars=@~/vault-credentials.yml nickhardiman.vm_satellite.build_vm.yml
+ansible-playbook --vault-pass-file=~/my-vault-pass --extra-vars=@~/vault-credentials.yml nickhardiman.vm_satellite.configure_os.yml
+ansible-playbook --vault-pass-file=~/my-vault-pass --extra-vars=@~/vault-credentials.yml nickhardiman.vm_satellite.install_app.yml
+ansible-playbook --vault-pass-file=~/my-vault-pass --extra-vars=@~/vault-credentials.yml nickhardiman.vm_satellite.configure_app.yml
+----
+
+Shell scripts in https://github.com/nickhardiman/script-rhel-setup create files my-vault-pass and vault-credentials.yml.
+
+Ansible roles in https://github.com/nickhardiman/ansible-collection-libvirt create the hypervisor.
+
+
+== add an IP route to workstation
 
 The workstation does not know about the private LAN.
 Add a route to allow a playbook running on the control node to SSH to the new managed node. 
@@ -14,9 +39,11 @@ Yet another refactor of my home lab automation
 
 WIP
 
-network of virtual machines on one fresh RHEL 10 host.
+Build a network of virtual machines on one fresh RHEL 10 host.
 
-take the AAP2 work and break up into less choking chunks
+Yet another refactor of my home lab automation. 
+
+Take the AAP2 work (ansible-playbook-aap-lab) and break up into less chokingly massive chunks.
 
 * https://github.com/nickhardiman/script-rhel-setup
 * https://github.com/nickhardiman/ansible-playbook-rhel-lab

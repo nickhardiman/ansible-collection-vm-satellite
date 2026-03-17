@@ -17,7 +17,6 @@
     name: nickhardiman.libvirt.start_domain
   vars:
     start_domain_name: "{{ build_fqdn }}"
-    wait_for_ping: false
 
 - name: Add name and address to /etc/hosts on control
   ansible.builtin.include_role:
