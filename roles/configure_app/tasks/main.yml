@@ -5,9 +5,25 @@
 # overhaul of my previous attempt 
 # https://github.com/nickhardiman/ansible-playbook-aap-lab/blob/main/playbooks/satellite-install-installer.yml
 
+# so very many to include from AAP lab
+# https://github.com/nickhardiman/ansible-playbook-aap-lab/blob/main/aap-lab-playbook%F0%9F%98%8E.yml
+
+# - ansible.builtin.import_playbook: playbooks/satellite-content-add.yml
+# - ansible.builtin.import_playbook: playbooks/satellite-infrastructure-add.yml
+# - ansible.builtin.import_playbook: playbooks/satellite-configure-add.yml
+
+# Vile workaround for crap var scope and passing
+- name: Include vars from satellite config directory
+  ansible.builtin.include_vars:
+    dir: satellite-config
+    ignore_files: []
+    extensions: ["yml"]
+
 - name: Change settings
   ansible.builtin.include_tasks: settings.yml
+- name: Get repo content
+  ansible.builtin.include_tasks: content_sync.yml
 - name: Manage repo content
-  ansible.builtin.include_tasks: content.yml
+  ansible.builtin.include_tasks: content_config.yml
 - name: Set up host creationjs
   ansible.builtin.include_tasks: provision.yml

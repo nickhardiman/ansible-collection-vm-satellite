@@ -1,0 +1,33 @@
+---
+
+# https://satellite/ > Administer > Settings > Content > Default HTTP Proxy
+# https://console.redhat.com/ansible/automation-hub/collections/published/redhat/satellite/documentation/role/settings
+
+
+# https://console.redhat.com/ansible/automation-hub/collections/published/redhat/satellite/documentation/role/$ROLE
+# $ROLE is settings, manifest, repositories, lifecycle_environments, etc. 
+- name: "Run Satellite roles"
+  ansible.builtin.include_role:
+    name: "{{ l_role }}"
+  loop:
+    - redhat.satellite.manifest                # see variables satellite_manifest_* in vars/satellite-config/satellite_content_1_subscriptions.yml
+    - redhat.satellite.repositories            # see variable satellite_products
+  loop_control:
+    loop_var: l_role
+
+# https://console.redhat.com/ansible/automation-hub/repo/published/redhat/satellite/content/module/repository_sync/
+# Can take an hour!
+# better to wait or to do as async background job?
+# https://github.com/sscheib/ansible_satellite/blob/main/07_satellite_sync_repositories.yml
+- name: "Display repos to sync"
+  ansible.builtin.debug:
+    msg: "{{ satellite_products | map(attribute='name') | unique }}"
+
+- name: "Sync all repositories in each product"
+  redhat.satellite.repository_sync:
+    server_url:   "{{ satellite_server_url }}"
+    username:     "{{ satellite_username }}"
+    password:     "{{ satellite_password }}"
+    organization: "{{ satellite_organization }}"
+    product: "{{ item }}"
+  loop: "{{ satellite_products | map(attribute='name') | unique }}"

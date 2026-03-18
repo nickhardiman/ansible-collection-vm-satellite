@@ -103,6 +103,13 @@ sat_content_views:
       - name: 'Red Hat Satellite Client 6 for RHEL 9 x86_64 RPMs'
         product: 'Red Hat Enterprise Linux for x86_64'
 
+    # empty lifecycle_environments list - publish to no lifecycle envs
+  - name: 'cv-rhcdn-ansible_automation_platform-rhel-9'
+    lifecycle_environments: []
+    repositories:
+      - name: 'Red Hat Ansible Automation Platform 2.4 for RHEL 9 x86_64 RPMs'
+        product: 'Red Hat Ansible Automation Platform'
+
 
   # RHEL 10
   - name: 'cv-rhcdn-base-rhel-10'
