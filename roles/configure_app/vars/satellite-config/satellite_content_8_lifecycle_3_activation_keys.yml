@@ -59,3 +59,16 @@ satellite_activation_keys:
     content_overrides:
       - label: 'satellite-client-6-for-rhel-9-x86_64-rpms'
         override: 'enabled'
+  - 
+    name: 'ak-build-rhel-10'
+    description: "All hosts which don't have a specialized host group"
+    lifecycle_environment: 'lce-build'
+    content_view: 'ccv-default-rhel-10'
+    release_version: 10
+    unlimited_hosts: true
+    service_level: 'Self-Support'
+    purpose_usage: 'Development/Test'
+    purpose_role: 'Red Hat Enterprise Linux Server'
+    content_overrides:
+      - label: 'satellite-client-6-for-rhel-10-x86_64-rpms'
+        override: 'enabled'

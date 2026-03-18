@@ -13,7 +13,7 @@ satellite_hostgroups:
     content_source: '{{ inventory_hostname }}'
     openscap_proxy: '{{ inventory_hostname }}'
     # console > Configure > Host Groups > Create Host Group > Network
-    domain: 'site3.example.com'
+    domain: 'silvan.uk'
     subnet: 'sn-lab-subnet'
     # console > Configure > Host Groups > Create Host Group > Operating System
     architecture: "x86_64"
@@ -38,7 +38,7 @@ satellite_hostgroups:
     content_source: '{{ inventory_hostname }}'
     openscap_proxy: '{{ inventory_hostname }}'
     # console > Configure > Host Groups > Create Host Group > Network
-    domain: 'site3.example.com'
+    domain: 'silvan.uk'
     subnet: 'sn-lab-subnet'
     # console > Configure > Host Groups > Create Host Group > Operating System
     architecture: "x86_64"
@@ -54,3 +54,28 @@ satellite_hostgroups:
       - '{{ satellite_organization }}'
     activation_keys: 
       - 'ak-build-rhel-9'
+  -
+    name: "hg-rhel-10"
+    organization: '{{ satellite_organization }}'
+    description: "RHEL 10 hostgroup"
+    lifecycle_environment: 'lce-build'
+    content_view: 'cv-rhcdn-base-rhel-10'
+    content_source: '{{ inventory_hostname }}'
+    openscap_proxy: '{{ inventory_hostname }}'
+    # console > Configure > Host Groups > Create Host Group > Network
+    domain: 'silvan.uk'
+    subnet: 'sn-lab-subnet'
+    # console > Configure > Host Groups > Create Host Group > Operating System
+    architecture: "x86_64"
+    operatingsystem: "RedHat 9.4"
+    kickstart_repository: 'Red Hat Enterprise Linux 9 for x86_64 - BaseOS Kickstart 9.4'
+    ptable: "Kickstart default"
+    pxe_loader: 'PXELinux BIOS'
+    root_pass: 'Password;1'
+    # console > Configure > Host Groups > Create Host Group > Locations, Organizations, Activation Keys
+    locations:
+      - '{{ satellite_location }}'
+    organizations:
+      - '{{ satellite_organization }}'
+    activation_keys: 
+      - 'ak-build-rhel-10'

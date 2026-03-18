@@ -22,7 +22,7 @@
   ansible.builtin.include_role:
     name: "{{ l_role }}"
   loop:
-    - redhat.satellite.manifest                # see variables satellite_manifest_*
+    - redhat.satellite.manifest                # see variables satellite_manifest_* in vars/satellite-config/satellite_content_1_subscriptions.yml
     - redhat.satellite.repositories            # see variable satellite_products
     - redhat.satellite.lifecycle_environments  # see variable satellite_lifecycle_environments
     - redhat.satellite.content_views           # see variables satellite_organization and satellite_content_views

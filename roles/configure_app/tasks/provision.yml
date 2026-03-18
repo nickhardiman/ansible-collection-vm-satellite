@@ -17,13 +17,13 @@
     extensions: ["yml"]
 
 # https://console.redhat.com/ansible/automation-hub/collections/published/redhat/satellite/documentation/role/$ROLE
-# $ROLE is settings, manifest, repositories, lifecycle_environments, etc. 
+# $ROLE is domains, subnets, hostgroups, etc. 
 - name: "Add roles that don't need extra vars"
   ansible.builtin.include_role:
     name: "{{ l_role }}"
   loop:
-    - redhat.satellite.domains
-    - redhat.satellite.subnets
-    - redhat.satellite.hostgroups
+    - redhat.satellite.domains     # see variable satellite_domains in vars/satellite-config/satellite_infrastructure.yml
+    - redhat.satellite.subnets     # satellite_subnets    in satellite_configure_hostgroups.yml
+    - redhat.satellite.hostgroups  # satellite_hostgroups in satellite_infrastructure.yml
   loop_control:
     loop_var: l_role
