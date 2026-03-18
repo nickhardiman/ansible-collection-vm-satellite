@@ -16,8 +16,8 @@ satellite_domains:
     locations:
       - "{{ satellite_location }}"
 
-# https://console.redhat.com/ansible/automation-hub/repo/published/redhat/satellite/content/role/subnets/
-# 11
+# fields are described in the module 
+# https://console.redhat.com/ansible/automation-hub/collections/published/redhat/satellite/documentation/module/subnet
 satellite_subnets:
   - name: 'sn-lab-subnet'
     network: "{{ lab_net_prefix }}.0"
@@ -30,6 +30,7 @@ satellite_subnets:
     dhcp_proxy: '{{ inventory_hostname }}'
     dns_proxy: '{{ inventory_hostname }}'
     tftp_proxy: '{{ inventory_hostname }}'
+    httpboot_proxy: '{{ inventory_hostname }}'
     template_proxy: '{{ inventory_hostname }}'
     discovery_proxy: '{{ inventory_hostname }}'
     remote_execution_proxies:
@@ -41,3 +42,16 @@ satellite_subnets:
       - "{{ satellite_organization }}"
     locations:
       - "{{ satellite_location }}"
+
+satellite_compute_resources:
+  - name: cr-libvirt
+    organizations:
+      - "{{ satellite_organization }}"
+    locations:
+      - "{{ satellite_location }}"
+    provider: libvirt
+    provider_params:
+      url: qemu+ssh://root@rhel.silvan.uk/system
+      display_type: vnc # or spice - where do i find this?
+    server_url: "https://satellite.silvan.uk"
+    state: present

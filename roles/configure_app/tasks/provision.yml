@@ -1,20 +1,41 @@
 ---
-# so very many to include
-# https://github.com/nickhardiman/ansible-playbook-aap-lab/blob/main/aap-lab-playbook%F0%9F%98%8E.yml
 
-# - ansible.builtin.import_playbook: playbooks/satellite-content-add.yml
-# - ansible.builtin.import_playbook: playbooks/satellite-infrastructure-add.yml
-# - ansible.builtin.import_playbook: playbooks/satellite-configure-add.yml
+# !!! libvirt setup is missing
+# Requires key SSH from foreman@satellite to root@hypervisor
+# on $SAT_HOST
+# ----
+# KVM_HOST=rhel.silvan.uk
+# SAT_HOST=satellite.silvan.uk
+# ssh $SAT_HOST
+# ----
+#
+# ----
+# su - foreman -s /bin/bash
+# # (/usr/share/foreman/.ssh, not /usr/share/foreman-proxy/.ssh)
+# # .ssh directory exists but is empty
+# ssh-keygen
+# FOREMAN_PUBLIC_KEY=$(</usr/share/foreman/.ssh/id_rsa.pub)
+# ----
+#
+# on $KVM_HOST as root
+# Manually copy the public key $FOREMAN_PUBLIC_KEY to the KVM server 
+# No change to libvirt config is required. 
+# ----
+# # echo $FOREMAN_PUBLIC_KEY >> $KVM_HOST:/root/.ssh/authorized_keys
+# ----
+#
+# on $SAT_HOST as root
+# ----
+# satellite-maintain packages install libvirt-client
+# # test 1, shows same result as running 'virsh list' as root@$KVM_HOST
+# su foreman -s /bin/bash 
+# virsh -c qemu+ssh://root@$KVM_HOST/system list
+# # test 2
+# exit
+# su foreman -s /bin/bash -c "virsh -c qemu+ssh://root@$KVM_HOST/system list"
+# ----
 
-# https://satellite/ > Administer > Settings > Content > Default HTTP Proxy
-# https://console.redhat.com/ansible/automation-hub/collections/published/redhat/satellite/documentation/role/settings
 
-# Vile workaround for crap var scope and passing
-- name: Include vars from satellite config directory
-  ansible.builtin.include_vars:
-    dir: satellite-config
-    ignore_files: []
-    extensions: ["yml"]
 
 # https://console.redhat.com/ansible/automation-hub/collections/published/redhat/satellite/documentation/role/$ROLE
 # $ROLE is domains, subnets, hostgroups, etc. 
@@ -22,8 +43,9 @@
   ansible.builtin.include_role:
     name: "{{ l_role }}"
   loop:
-    - redhat.satellite.domains     # see variable satellite_domains in vars/satellite-config/satellite_infrastructure.yml
-    - redhat.satellite.subnets     # satellite_subnets    in satellite_configure_hostgroups.yml
-    - redhat.satellite.hostgroups  # satellite_hostgroups in satellite_infrastructure.yml
+    - redhat.satellite.domains            # see variable satellite_domains in vars/satellite-config/satellite_infrastructure.yml
+    - redhat.satellite.subnets            # satellite_subnets           in satellite_configure_hostgroups.yml
+    - redhat.satellite.hostgroups         # satellite_hostgroups        in satellite_infrastructure.yml
+    - redhat.satellite.compute_resources  # satellite_compute_resources in satellite_infrastructure.yml
   loop_control:
     loop_var: l_role

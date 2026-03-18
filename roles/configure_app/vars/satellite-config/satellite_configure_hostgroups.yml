@@ -33,8 +33,7 @@ satellite_hostgroups:
       - "{{ satellite_organization }}"
     locations:
       - "{{ satellite_location }}"
-    activation_keys: 
-      - 'ak-build-rhel-8'
+    activation_keys: ak-build-rhel-8
   -
     name: "hg-rhel-9"
     organization: '{{ satellite_organization }}'
@@ -48,8 +47,8 @@ satellite_hostgroups:
     subnet: 'sn-lab-subnet'
     # console > Configure > Host Groups > Create Host Group > Operating System
     architecture: "x86_64"
-    operatingsystem: "RedHat 9.4"
-    kickstart_repository: 'Red Hat Enterprise Linux 9 for x86_64 - BaseOS Kickstart 9.4'
+    operatingsystem: "RedHat 9.7"
+    kickstart_repository: 'Red Hat Enterprise Linux 9 for x86_64 - BaseOS Kickstart 9.7'
     ptable: "Kickstart default"
     pxe_loader: 'PXELinux BIOS'
     root_pass: 'Password;1'
@@ -58,8 +57,7 @@ satellite_hostgroups:
       - '{{ satellite_location }}'
     organizations:
       - '{{ satellite_organization }}'
-    activation_keys: 
-      - 'ak-build-rhel-9'
+    activation_keys: ak-build-rhel-9
   -
     name: "hg-rhel-10"
     organization: '{{ satellite_organization }}'
@@ -83,5 +81,4 @@ satellite_hostgroups:
       - '{{ satellite_location }}'
     organizations:
       - '{{ satellite_organization }}'
-    activation_keys: 
-      - 'ak-build-rhel-10'
+    activation_keys: ak-build-rhel-10
