@@ -15,11 +15,11 @@
     ignore_files: []
     extensions: ["yml"]
 
-- name: Change settings
-  ansible.builtin.include_tasks: settings.yml
-- name: Get repo content
-  ansible.builtin.include_tasks: content_sync.yml
-- name: Manage repo content
-  ansible.builtin.include_tasks: content_config.yml
+# - name: Change settings
+#   ansible.builtin.include_tasks: settings.yml
+# - name: Get repo content
+#   ansible.builtin.include_tasks: content_sync.yml
+# - name: Manage repo content
+#   ansible.builtin.include_tasks: content_config.yml
 - name: Set up host creation
   ansible.builtin.include_tasks: provision.yml

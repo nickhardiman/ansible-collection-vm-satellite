@@ -15,6 +15,7 @@ satellite_domains:
       - "{{ satellite_organization }}"
     locations:
       - "{{ satellite_location }}"
+    dns_proxy: '{{ inventory_hostname }}'
 
 # fields are described in the module 
 # https://console.redhat.com/ansible/automation-hub/collections/published/redhat/satellite/documentation/module/subnet

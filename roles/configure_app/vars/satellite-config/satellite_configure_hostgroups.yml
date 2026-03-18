@@ -47,8 +47,10 @@ satellite_hostgroups:
     subnet: 'sn-lab-subnet'
     # console > Configure > Host Groups > Create Host Group > Operating System
     architecture: "x86_64"
-    operatingsystem: "RedHat 9.7"
-    kickstart_repository: 'Red Hat Enterprise Linux 9 for x86_64 - BaseOS Kickstart 9.7'
+    operatingsystem: "RedHat 9.4"
+    kickstart_repository: 'Red Hat Enterprise Linux 9 for x86_64 - BaseOS Kickstart 9.4'
+    # operatingsystem: "RHEL 9.7"
+    # kickstart_repository: 'Red Hat Enterprise Linux 9 for x86_64 - BaseOS Kickstart 9.7'
     ptable: "Kickstart default"
     pxe_loader: 'PXELinux BIOS'
     root_pass: 'Password;1'
