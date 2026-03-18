@@ -3,6 +3,12 @@
 # https://satellite/ > Configure > Host Groups > Create Host Group > Host Group
 # https://console.redhat.com/ansible/automation-hub/repo/published/redhat/satellite/content/role/hostgroups/
 # web UI https://satellite/hostgroups
+
+# root_pass and nolog
+# Role
+# collections/ansible_collections/redhat/satellite/roles/hostgroups/tasks/main.yml
+# sets nolog: true if root_pass is defined
+
 satellite_hostgroups:
   - 
     name: "hg-rhel-8"
@@ -67,8 +73,8 @@ satellite_hostgroups:
     subnet: 'sn-lab-subnet'
     # console > Configure > Host Groups > Create Host Group > Operating System
     architecture: "x86_64"
-    operatingsystem: "RedHat 9.4"
-    kickstart_repository: 'Red Hat Enterprise Linux 9 for x86_64 - BaseOS Kickstart 9.4'
+    operatingsystem: "RedHat 10.1"
+    kickstart_repository: 'Red Hat Enterprise Linux 10 for x86_64 - BaseOS Kickstart 10.1'
     ptable: "Kickstart default"
     pxe_loader: 'PXELinux BIOS'
     root_pass: 'Password;1'
