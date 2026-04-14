@@ -1,8 +1,13 @@
 ---
-
+# manual configure
 # https://satellite/ > Configure > Host Groups > Create Host Group > Host Group
-# https://console.redhat.com/ansible/automation-hub/repo/published/redhat/satellite/content/role/hostgroups/
 # web UI https://satellite/hostgroups
+# collection docs
+# module (describes fields)
+# https://console.redhat.com/ansible/automation-hub/collections/published/redhat/satellite/documentation/module/hostgroup
+# role
+# https://console.redhat.com/ansible/automation-hub/collections/published/redhat/satellite/documentation/role/hostgroups
+#   was https://console.redhat.com/ansible/automation-hub/repo/published/redhat/satellite/content/role/hostgroups/
 
 # root_pass and nolog
 # Role
@@ -26,7 +31,9 @@ satellite_hostgroups:
     operatingsystem: "RedHat 8.10"
     kickstart_repository: 'Red Hat Enterprise Linux 8 for x86_64 - BaseOS Kickstart 8.10'
     ptable: "Kickstart default"
-    pxe_loader: 'PXELinux BIOS'
+    # libvirt+UEFI provision only works if this is set to None
+    pxe_loader: 'None'
+    # pxe_loader: 'PXELinux BIOS'
     root_pass: 'Password;1'
     # console > Configure > Host Groups > Create Host Group > Locations, Organizations, Activation Keys
     organizations:
